@@ -1,4 +1,4 @@
-import 'package:intern_tz_project/view/preview_image_widget.dart';
+import 'package:intern_tz_project/view/widgets/preview_image_widget.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {

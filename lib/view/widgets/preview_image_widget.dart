@@ -1,7 +1,7 @@
 import 'package:camerawesome/camerawesome_plugin.dart';
 import 'package:camerawesome/pigeon.dart';
 import 'package:intern_tz_project/view/dialogs/app_dialogs.dart';
-import 'package:intern_tz_project/view/preparing_camera_widget.dart';
+import 'package:intern_tz_project/view/widgets/preparing_camera_widget.dart';
 import 'package:flutter/material.dart';
 
 class PreviewImageWidget extends StatefulWidget {
