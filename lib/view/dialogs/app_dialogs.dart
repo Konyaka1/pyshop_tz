@@ -8,6 +8,7 @@ Future<void> showSendingDialog(
     BuildContext context, String comment, String imagePath) {
   return showDialog(
     context: context,
+    barrierDismissible: false,
     builder: (context) {
       return FutureBuilder(
         future: _imgService.sendImage(comment, imagePath),
@@ -17,9 +18,9 @@ Future<void> showSendingDialog(
               error: snapshot.error.toString(),
             );
           } else if (snapshot.hasData) {
-            return _success;
+            return const _SuccessDialog(text: 'Sent!');
           } else {
-            return _loading;
+            return const _LoadingDialog(text: 'Sending image');
           }
         },
       );
@@ -27,15 +28,59 @@ Future<void> showSendingDialog(
   );
 }
 
-const _success = AlertDialog(
-  title: Text('Success'),
-  content: Text('Sent!'),
-);
+Future<void> showErrorDialog(BuildContext context, String error) {
+  return showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (context) => _ErrorDialog(
+      error: error,
+    ),
+  );
+}
 
-const _loading = AlertDialog(
-  title: Text('Sending'),
-  content: CupertinoActivityIndicator(),
-);
+class _SuccessDialog extends StatelessWidget {
+  final String text;
+
+  const _SuccessDialog({required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Success'),
+      content: Text(text),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('Ok'),
+        ),
+      ],
+    );
+  }
+}
+
+class _LoadingDialog extends StatelessWidget {
+  final String text;
+
+  const _LoadingDialog({required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text(text),
+      content: const CupertinoActivityIndicator(),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('Ok'),
+        ),
+      ],
+    );
+  }
+}
 
 class _ErrorDialog extends StatelessWidget {
   const _ErrorDialog({
@@ -49,6 +94,14 @@ class _ErrorDialog extends StatelessWidget {
     return AlertDialog(
       title: const Text('Error'),
       content: Text(error),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('Ok'),
+        ),
+      ],
     );
   }
 }
