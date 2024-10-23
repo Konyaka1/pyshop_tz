@@ -19,10 +19,13 @@ class ImageRepository {
       ..files.add(await http.MultipartFile.fromPath('photo', imagePath));
 
     req.headers['Content-Type'] = 'application/javascript';
-
-    final stream = await req.send();
-    final res = await http.Response.fromStream(stream);
-    final status = res.statusCode;
-    if (status != 200) throw Exception('Server unavailable');
+    try {
+      final stream = await req.send();
+      final res = await http.Response.fromStream(stream);
+      final status = res.statusCode;
+      if (status != 201) throw Exception('Server unavailable');
+    } on Exception {
+      throw Exception('Server unavailable');
+    }
   }
 }
