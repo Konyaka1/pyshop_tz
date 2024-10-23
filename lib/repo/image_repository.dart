@@ -23,6 +23,6 @@ class ImageRepository {
     final stream = await req.send();
     final res = await http.Response.fromStream(stream);
     final status = res.statusCode;
-    if (status != 200) throw Exception('http.send error: statusCode= $status');
+    if (status != 200) throw Exception('Server unavailable');
   }
 }

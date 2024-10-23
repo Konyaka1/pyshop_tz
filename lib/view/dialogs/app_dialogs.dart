@@ -28,6 +28,16 @@ Future<void> showSendingDialog(
   );
 }
 
+Future<void> showLoadingDialog(BuildContext context, String text) {
+  return showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (context) => _LoadingDialog(
+      text: text,
+    ),
+  );
+}
+
 Future<void> showErrorDialog(BuildContext context, String error) {
   return showDialog(
     context: context,
@@ -70,14 +80,6 @@ class _LoadingDialog extends StatelessWidget {
     return AlertDialog(
       title: Text(text),
       content: const CupertinoActivityIndicator(),
-      actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('Ok'),
-        ),
-      ],
     );
   }
 }

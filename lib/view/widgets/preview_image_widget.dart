@@ -38,20 +38,16 @@ class _PreviewImageWidgetState extends State<PreviewImageWidget> {
 
   Future<void> onMediaCaptureEvent(
       MediaCapture mediaCapture, BuildContext context) async {
-    if (controller.text.isEmpty) {
-      return showErrorDialog(context, 'Text can\'t be empty');
-    }
-
     if (mediaCapture.status == MediaCaptureStatus.capturing) {
-      return;
+      return showLoadingDialog(context, 'Preparing image');
+    } else if (mediaCapture.status == MediaCaptureStatus.success) {
+      Navigator.of(context).pop();
+      return showSendingDialog(
+          context, controller.text, mediaCapture.captureRequest.path!);
+    } else if (mediaCapture.status == MediaCaptureStatus.failure) {
+      Navigator.of(context).pop();
+      return showErrorDialog(context, 'Failed image');
     }
-
-    final imagePath = mediaCapture.captureRequest.path;
-    if (imagePath == null) {
-      return;
-    }
-
-    return showSendingDialog(context, controller.text, imagePath);
   }
 
   @override

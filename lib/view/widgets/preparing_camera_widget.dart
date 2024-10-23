@@ -7,8 +7,10 @@ class PreparingCameraWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Center(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text('Preparing camera'),
+          SizedBox(height: 16),
           CupertinoActivityIndicator(),
         ],
       ),
